@@ -1,0 +1,142 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# docker-compose.yml (fixed indentation, one arg per line)
+# ─────────────────────────────────────────────────────────────────────────────
+services:
+  server1:
+    image: avid-fp-store:latest
+    build: .
+    command:
+      - "-port"
+      - "50051"
+      - "-db"
+      - "/data/store-50051.db"
+      - "-datadir"
+      - "/data/data-50051"
+      - "-metricsPort"
+      - "9102"
+      - "-peers"
+      - "server1:50051,server2:50052,server3:50053,server4:50054,server5:50055"
+    volumes:
+      - store1:/data
+    ports:
+      - "50051:50051"
+      - "9102:9102"
+    networks:
+      - store
+
+  server2:
+    image: avid-fp-store:latest
+    command:
+      - "-port"
+      - "50052"
+      - "-db"
+      - "/data/store-50052.db"
+      - "-datadir"
+      - "/data/data-50052"
+      - "-metricsPort"
+      - "9103"
+      - "-peers"
+      - "server1:50051,server2:50052,server3:50053,server4:50054,server5:50055"
+    volumes:
+      - store2:/data
+    ports:
+      - "50052:50052"
+      - "9103:9103"
+    networks:
+      - store
+
+  server3:
+    image: avid-fp-store:latest
+    command:
+      - "-port"
+      - "50053"
+      - "-db"
+      - "/data/store-50053.db"
+      - "-datadir"
+      - "/data/data-50053"
+      - "-metricsPort"
+      - "9104"
+      - "-peers"
+      - "server1:50051,server2:50052,server3:50053,server4:50054,server5:50055"
+    volumes:
+      - store3:/data
+    ports:
+      - "50053:50053"
+      - "9104:9104"
+    networks:
+      - store
+
+  server4:
+    image: avid-fp-store:latest
+    command:
+      - "-port"
+      - "50054"
+      - "-db"
+      - "/data/store-50054.db"
+      - "-datadir"
+      - "/data/data-50054"
+      - "-metricsPort"
+      - "9105"
+      - "-peers"
+      - "server1:50051,server2:50052,server3:50053,server4:50054,server5:50055"
+    volumes:
+      - store4:/data
+    ports:
+      - "50054:50054"
+      - "9105:9105"
+    networks:
+      - store
+
+  server5:
+    image: avid-fp-store:latest
+    command:
+      - "-port"
+      - "50055"
+      - "-db"
+      - "/data/store-50055.db"
+      - "-datadir"
+      - "/data/data-50055"
+      - "-metricsPort"
+      - "9106"
+      - "-peers"
+      - "server1:50051,server2:50052,server3:50053,server4:50054,server5:50055"
+    volumes:
+      - store5:/data
+    ports:
+      - "50055:50055"
+      - "9106:9106"
+    networks:
+      - store
+
+  prometheus:
+    image: prom/prometheus:v2.52.0
+    volumes:
+      - ./deploy/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+    networks:
+      - store
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:10.2.4
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    ports:
+      - "3000:3000"
+    networks:
+      - store
+    restart: unless-stopped
+
+networks:
+  store:
+    driver: bridge
+
+volumes:
+  store1: {}
+  store2: {}
+  store3: {}
+  store4: {}
+  store5: {}
+# ─────────────────────────────────────────────────────────────────────────────

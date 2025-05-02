@@ -1,0 +1,67 @@
+// pkg/protocol/protocol.proto
+// Author: Manoj Myneni
+// UIC, Spring 2025
+//
+
+// gRPC definitions for the AVID-FP protocol: Disperse, Echo, Ready, and Retrieve.
+// These RPCs allow clients and servers to coordinate erasure-coded fragment dispersal
+// and integrity-verified retrieval in a fault-tolerant distributed object store.
+
+syntax = "proto3";
+package protocol;
+option go_package = "github.com/dattu/distributed_object_store/pkg/protocol;protocol";
+
+// Fingerprinted cross‑checksum: per‑fragment hash, per‑fragment FP, plus the FP seed
+message FPCC {
+  repeated bytes hashes = 1;  // SHA‑256 hash of each fragment
+  repeated uint64 fps   = 2;  // homomorphic fingerprint of each fragment
+  uint64 seed           = 3;  // secret evaluation point used for all fingerprints
+}
+
+message DisperseRequest {
+  string object_id      = 1;
+  uint32 fragment_index = 2;
+  bytes fragment        = 3;
+  FPCC   fpcc           = 4;
+}
+message DisperseResponse {
+  bool   ok    = 1;
+  string error = 2;
+}
+
+message EchoRequest {
+  string object_id = 1;
+  FPCC   fpcc      = 2;
+}
+message EchoResponse {
+  bool   ok    = 1;
+  string error = 2;
+}
+
+message ReadyRequest {
+  string object_id = 1;
+  FPCC   fpcc      = 2;
+}
+message ReadyResponse {
+  bool   ok    = 1;
+  string error = 2;
+}
+
+message RetrieveRequest {
+  string object_id      = 1;
+  uint32 fragment_index = 2;
+}
+message RetrieveResponse {
+  bool   ok             = 1;
+  string error          = 2;
+  bytes  fragment       = 3;
+  uint32 fragment_index = 4;
+  FPCC   fpcc           = 5;
+}
+
+service Dispersal {
+  rpc Disperse (DisperseRequest)  returns (DisperseResponse);
+  rpc Echo      (EchoRequest)      returns (EchoResponse);
+  rpc Ready     (ReadyRequest)     returns (ReadyResponse);
+  rpc Retrieve  (RetrieveRequest)  returns (RetrieveResponse);
+}

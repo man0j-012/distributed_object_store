@@ -1,0 +1,93 @@
+
+
+*************Command     |||||    Execution*********************************************
+
+
+docker compose down  
+docker container prune -f; docker volume prune -f           
+Remove-Item -Recurse -Force data*, *.bin, *.txt -ErrorAction SilentlyContinue
+Get-ChildItem -Filter 'store-*.db'  | Remove-Item -Force -ErrorAction SilentlyContinue
+Get-Process server -ErrorAction SilentlyContinue | Stop-Process -Force
+docker compose -f .\docker-compose.yml down -v
+taskkill /IM server.exe /F 2>$null
+
+Stopping any local server processes and wiping old fragment directories and BoltDB files.”
+“Tearing down the old cluster, rebuilding the Go binaries, rebuilding the Docker images, and bringing up five servers plus Prometheus and Grafana.”
+
+
+
+docker compose build --pull
+docker compose up -d
+docker compose ps      
+
+
+$P = "localhost:50051,localhost:50052,localhost:50053,localhost:50054,localhost:50055"  --- Say: “This $P variable holds our five-node peer list for m=3,n=5, giving f=2 fault tolerance.”
+
+//“Client Reed–Solomon encodes into five shards, computes SHA-256 and 64-bit fingerprints, packs into FPCC, and gRPC-fans Disperse→Echo→Ready until commit.”
+
+"Phase-1 demo $(Get-Date)" | Set-Content demo.txt
+.\bin\client.exe -mode disperse -file demo.txt -id demo -peers $P -m 3 -n 5  
+
+.\bin\client.exe -mode retrieve -file ok.txt -id demo -peers $P -m 3 -n 5
+Compare-Object (Get-Content demo.txt) (Get-Content ok.txt)
+
+//“Three shards rebuild the file; Compare-Object shows they match bit-for-bit.”
+
+//Say: “Simulating two node crashes—servers 2 and 4—still within our f=2 budget.” Availability test (≤ f faults)
+
+docker kill distributed_object_store-server2-1 distributed_object_store-server4-1
+
+//Client pulls any three good shards, verifies SIG+FP, decodes file
+
+.\bin\client.exe -mode retrieve -file avail.txt -id demo -peers "localhost:50051,localhost:50052,localhost:50053" -m 3 -n 5
+
+
+
+###############################################################################
+# 2-A  Bring cluster healthy again & write a fresh object (id = demoB)Integrity-failure demo (> f faults on same indices)
+###############################################################################
+docker start distributed_object_store-server2-1 distributed_object_store-server4-1
+
+"Phase-2 demo $(Get-Date)" | Set-Content demoB.txt
+
+.\bin\client.exe  -mode  disperse -file  demoB.txt -id demoB -peers $P                     
+
+  //“Corrupt every copy of shards 0-2 on nodes 1-3 (f + 1 indices).”
+
+
+
+foreach ($idx in 0,1,2) {
+  foreach ($s in 1,2,3) {
+    $ctr = "distributed_object_store-server${s}-1"
+    $rem = "/data/data-5005${s}/demoB/$idx.bin"
+    $tmp = "tmp_${idx}_${s}.bin"
+
+    docker cp "$($ctr):$rem" $tmp
+    $bytes = [IO.File]::ReadAllBytes($tmp)
+    $bytes[0] = $bytes[0] -bxor 0xFF          # flip first byte
+    [IO.File]::WriteAllBytes($tmp,$bytes)
+    docker cp  $tmp  "$($ctr):$rem"
+    Remove-Item $tmp
+  }
+}
+
+docker kill distributed_object_store-server4-1 distributed_object_store-server5-1
+
+.\bin\client.exe `
+  -mode  retrieve `
+  -file  hacked.txt `
+  -id    demoB `
+  -peers "localhost:50051,localhost:50052,localhost:50053"
+# Expect: “only 2/3 good shards; cannot decode” (integrity enforced)
+
+“Integrity check fails: < m good shards, so decode is refused.”
+
+
+
+| Scenario                            Faults present                                                             | # good shards returned  | Outcome |
+
+| **Happy path**                         None                                                                    | 5 of 5                 | Success (baseline) | -Trivial case: we have ≥ m clean shards, RS simply re-assembles.
+| **Availability test**                  2 crashes                                                               | 3 of 5                 | Success (fault-tolerant) | even after losing two complete servers, RS lets us decode because we still have m = 3 clean fragments.
+| **Integrity-failure test** (Phase 2)   f + 1 corrupted indices- beyond design budget                           | ≤ 2 ( &lt; m )         | **Fail** – client refuses to decode | ---RS can’t reconstruct with < m shards, so the system correctly rejects the read—showing both the limit and the integrity guardrail--Integrity path dominates: client’s hash + fingerprint check rejects the three bad shards, leaving < m clean ones – Reed–Solomon is not invoked
+
+

@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: avid-fp-store
+    static_configs:
+      - targets:
+          - server1:9102
+          - server2:9103
+          - server3:9104
+          - server4:9105
+          - server5:9106
