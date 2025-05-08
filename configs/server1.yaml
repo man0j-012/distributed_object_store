@@ -1,0 +1,26 @@
+cluster:
+  peers:
+    [
+      "server1:50051",
+      "server2:50052",
+      "server3:50053",
+      "server4:50054",
+      "server5:50055",
+      "server6:50056",
+    ]
+  self: "server1:50051"
+
+erasure:
+  data: 4 # m
+  total: 6 # n
+
+object:
+  ttl: "24h"
+
+storage:
+  datadir: "/data/fragments"
+  db: "/data/store.db"
+
+server:
+  grpc_port: 50051
+  metrics_port: 9102
