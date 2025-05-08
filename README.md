@@ -74,7 +74,7 @@ Client CLI  ──▶ Disperse / Retrieve RPCs ──▶ 5 Storage Nodes
 | Grafana dashboard | p50/p95 RPC latency, write/read throughput, GC & snapshot events |
 | `docker logs`     | Structured JSON for every RPC, shard index, and error            |
 
-##🔒 Security Model
+## 🔒 Security Model
 
 Tolerates ≤ f = n – m Byzantine nodes.
 
