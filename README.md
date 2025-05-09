@@ -38,25 +38,51 @@ Slides: [AVID FP – Store.pptx](AVID%20FP%20-%20Store.pptx)
 ├── Design_Document.pdf
 ├── Test_Verification.pdf
 └── User_Manual.pdf
+```
 
-
-## 🎯 Why AVID‑FP?
-
-- **⚡ Research → Reality**  
-  You read the papers, now see it in Go: 3.6 k LOC, 98 % unit‑test coverage, end‑to‑end AVID‑FP protocol in action.  
-- **🔐 Bullet‑proof Integrity**  
-  SHA‑256 + 64‑bit homomorphic fingerprints guard every byte. Automatic self‑echo and Ready‐gossip ensure you never trust a bad fragment.  
-- **💥 Extreme Resilience**  
-  Reed–Solomon _(m,n)_ erasure coding + Bracha quorum → survive _f = n–m_ simultaneous node failures without data loss.  
-- **🚀 Blistering Performance**  
-  400 MB/s aggregate write throughput (m/n configurable), < 5 % overhead for integrity checks, linear horizontal scale.  
-- **⚙️ Full DevOps Pipeline**  
-  Zero‑downtime rolling upgrades, Docker Compose 5‑node & 6‑node clusters, Prometheus metrics, Grafana dashboards, one‑click snapshot & TTL‑based GC.  
-- **🏆 Academic & Industry Impact**  
-  Adopted as the reference project in “Security & Privacy in Distributed Systems” courses; cited by PhD researchers in fault‑tolerant storage.
 
 ---
+
+## 3  System Design & Architecture
+### 3.1 High-level Flow  
+![High-Level Design](Images/Figure1.png)
+
+### 3.2 Write / Read Sequence (m = 3, n = 5)  
+![Disperse + Retrieve Sequence](Images/Figure2.png)
+
+Detailed rationale & component diagrams live in [`Design_Document.pdf`](Design_Document.pdf).
+
 ---
+
+## 4  Implementation & Demo
+The whole system compiles to *two* static binaries (`server`, `client`).  
+Run a 5-node demo cluster and perform a write/read in < 30 s:
+
+```bash
+git clone https://github.com/your-repo/distributed_object_store.git
+cd distributed_object_store
+
+# build + launch 5 nodes, Prometheus & Grafana
+docker compose up -d
+
+# generate 100 MiB sample
+dd if=/dev/urandom of=demo.bin bs=1M count=100
+
+# disperse (m=3,n=5)
+docker compose cp demo.bin server1:/demo.bin
+docker compose exec server1 /bin/client \
+  -mode disperse -file /demo.bin -id demo \
+  -peers server1:50051,server2:50052,server3:50053,server4:50054,server5:50055 \
+  -m 3 -n 5
+
+# retrieve from another node
+docker compose exec server3 /bin/client \
+  -mode retrieve -file /out.bin -id demo \
+  -peers server1:50051,server2:50052,server3:50053,server4:50054,server5:50055 \
+  -m 3 -n 5
+docker compose cp server3:/out.bin .
+diff demo.bin out.bin && echo "✅ Integrity OK!"
+```
 
 ---
 
