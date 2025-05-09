@@ -18,8 +18,8 @@
 
 The **AVID-FP Object Store** converts cutting-edge research on verifiable erasure-coded storage into a runnable microservice:
 
-| Stage | What happens | Why it matters |
-|-------|--------------|----------------|
+| Stage | What happens 
+|-------|--------------|
 | ① **Client slices the object** into *m* data + (*n – m*) parity fragments via SIMD-accelerated Reed–Solomon. | 1.5–1.7× storage overhead instead of 3× replication. |
 | ② **Client builds an FPCC** (fingerprinted cross-checksum): SHA-256 + 64-bit homomorphic fingerprint per fragment. | Reader can prove integrity after downloading only *m* shards. |
 | ③ **Fragments + FPCC fan-out** to *n* identical storage nodes over gRPC. | No single point of failure; client remains stateless after upload. |
@@ -40,13 +40,7 @@ Slides: [AVID FP – Store.pptx](AVID%20FP%20-%20Store.pptx)   •  [Design 
 |  **Extreme Resilience** | RS (m,n) + Bracha quorum tolerates *f = n – m* bad nodes. | Survives crashes, omissions, or malicious peers. |
 |  **Blistering Performance** | Up to **400 MB s⁻¹** writes; \< 5 % verification overhead. | High throughput _and_ cryptographic safety. |
 |  **Full DevOps Pipeline** | Distroless 14 MB image, zero-downtime upgrades, Prom/Graf. | Deploy and observe in minutes. |
-|  **Academic & Industry Impact** | Reference project in Security & Distributed Systems, cited by PhD work. | Battle-tested learning & research platform. |
-
-## Research Credits 🙏  
-This project is a *practical* follow-up to  
-> **James Hendricks, Gregory R. Ganger, Michael K. Reiter.**  *Verifying Distributed Erasure-Coded Data.* Carnegie Mellon University / UNC Chapel Hill, 2007.  
-
-Their foundational ideas on verifiable erasure-coded storage inspired the engineering work you see here.  
+|  **Academic & Industry Impact** | Reference project in Security & Distributed Systems, cited by PhD work. | Battle-tested learning & research platform. | 
 
 ---
 
@@ -168,7 +162,13 @@ Observability — Prometheus histograms (avid_fp_*), Grafana JSON pre-imported.
 Author: Manoj Myneni
 License: MIT — PRs & issue reports welcome!
 
-## 10 Gratitude Message
+## 10 Research Credits 🙏  
+This project is a *practical* follow-up to  
+> **James Hendricks, Gregory R. Ganger, Michael K. Reiter.**  *Verifying Distributed Erasure-Coded Data.* Carnegie Mellon University / UNC Chapel Hill, 2007.  
+
+Their foundational ideas on verifiable erasure-coded storage inspired the engineering work you see here. 
+
+## 11 Gratitude Message
 Thanks to our Professor Anrin C. for constant help and motivation.
 
 “Strong integrity, smart redundancy—shipped in a 14 MB container.”
