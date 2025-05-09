@@ -31,8 +31,7 @@ Slides: [AVID FP – Store.pptx](AVID%20FP%20-%20Store.pptx)
 | 💥 **Extreme Resilience** | Reed–Solomon \((m,n)\) + Bracha quorum tolerates *f = n – m* Byzantine nodes. | Lose disks, power, or even malicious peers—data still safe. |
 | 🚀 **Blistering Performance** | Up to **400 MB s⁻¹** aggregate writes (configurable *m/n*).<br>\< 5 % latency overhead for integrity checks. | High throughput with cryptographic safety—rare combo. |
 | ⚙️ **Full DevOps Pipeline** | Distroless 14 MB image, 1-command Compose stacks (5- or 6-node), zero-downtime rolling upgrades, Prometheus, Grafana, TTL GC, one-click snapshots. | From laptop demo to staging cluster in minutes, observability included. |
-| 🏆 **Academic & Industry Impact** | Reference project in “Security & Privacy in Distributed Systems”.<br>Cited by PhD research on verifiable storage. | Open-sourced to
- assist researchers exploring real-world system integrity guarantees. |
+| 🏆 **Academic & Industry Impact** | Reference project in “Security & Privacy in Distributed Systems”.<br>Cited by PhD research on verifiable storage. | Open-sourced to assist researchers |
 
 
 ---
