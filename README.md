@@ -2,7 +2,11 @@
 
 [![Go 1.23](https://img.shields.io/badge/Go-1.23-blue)](https://golang.org) [![License MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE) [![Docker](https://img.shields.io/badge/Docker-Ready-orange)](https://www.docker.com)  
 
-> **“The first production‑grade, Byzantine‑fault‑tolerant object store with homomorphic‑fingerprinting. A reference implementation praised by top university faculty.”**
+# AVID-FP Object Store  
+*A fault-tolerant, integrity-verified distributed object store*
+
+AVID-FP Store turns the **Asynchronous Verifiable Information Dispersal with FingerPrinting (AVID-FP)** research protocol into a production-grade, container-native storage service.  
+It stripes every object with Reed–Solomon, confirms writes via **Echo / Ready** quorums, and validates reads in constant time using 64-bit homomorphic fingerprints. The result is S3-style durability with Byzantine-fault tolerance and < 6 % verification overhead. :contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}
 
 ---
 
