@@ -1,14 +1,29 @@
-# 🚀 AVID‑FP Distributed Object Store
-
-[![Go 1.23](https://img.shields.io/badge/Go-1.23-blue)](https://golang.org) [![License MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE) [![Docker](https://img.shields.io/badge/Docker-Ready-orange)](https://www.docker.com)  
-
-# AVID-FP Object Store  
-*A fault-tolerant, integrity-verified distributed object store*
-
-AVID-FP Store turns the **Asynchronous Verifiable Information Dispersal with FingerPrinting (AVID-FP)** research protocol into a production-grade, container-native storage service.  
-It stripes every object with Reed–Solomon, confirms writes via **Echo / Ready** quorums, and validates reads in constant time using 64-bit homomorphic fingerprints. The result is S3-style durability with Byzantine-fault tolerance and < 6 % verification overhead. :contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}
+<h1 align="center">AVID-FP Object Store — README</h1>
+<p align="center"><em>Fault-tolerant • Verifiable • Container-ready</em></p>
+<p align="center">
+  <img src="https://img.shields.io/badge/Go-1.23-blue?logo=go" alt="Go 1.23">
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="MIT">
+  <img src="https://img.shields.io/badge/Throughput-110&nbsp;MB·s⁻¹-brightgreen" alt="Throughput">
+  <img src="https://img.shields.io/badge/Integrity-2⁻⁶⁴&nbsp;collision--prob-orange" alt="Integrity">
+</p>
 
 ---
+
+## 1  Project Overview
+The **AVID-FP Object Store** is the world’s **first practical implementation of the AVID-FP protocol**.  
+It couples Reed–Solomon erasure coding with homomorphic fingerprints and a two-phase Echo/Ready gossip to deliver:
+
+* **Durability** — survive up to *f = n – m* Byzantine nodes  
+* **Bandwidth-proportional integrity** — validate after reading only *m* shards  
+* **DevOps delight** — 14 MB distroless images, Prometheus/Grafana out of the box  
+
+Full write-up: [`AVID_FP_Report.pdf`](AVID_FP_Report.pdf)  
+Slides: [`AVID FP - Store.pptx`](AVID FP - Store.pptx)
+
+---
+
+## 2  Project Structure
+
 
 ## 🎯 Why AVID‑FP?
 
