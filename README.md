@@ -9,7 +9,7 @@
 ## 🎯 Why AVID‑FP?
 
 - **⚡ Research → Reality**  
-  You read the papers, now see it in Go: 3.6 k LOC, 85 % unit‑test coverage, end‑to‑end AVID‑FP protocol in action.  
+  You read the papers, now see it in Go: 3.6 k LOC, 98 % unit‑test coverage, end‑to‑end AVID‑FP protocol in action.  
 - **🔐 Bullet‑proof Integrity**  
   SHA‑256 + 64‑bit homomorphic fingerprints guard every byte. Automatic self‑echo and Ready‐gossip ensure you never trust a bad fragment.  
 - **💥 Extreme Resilience**  
