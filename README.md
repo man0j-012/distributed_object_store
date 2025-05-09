@@ -83,6 +83,8 @@ docker compose exec server3 /bin/client \
 docker compose cp server3:/out.bin .
 diff demo.bin out.bin && echo "✅ Integrity OK!"
 ```
+Need more? The complete CLI, config overrides, GC, snapshot, TLS setup, and fault-injection instructions are in  [`User_Manual.pdf`](User_Manual.pdf).
+
 
 ---
 
