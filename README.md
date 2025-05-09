@@ -9,13 +9,18 @@
 
 ---
 
-## 1  Project Overview
-The **AVID-FP Object Store** is the world’s **first practical implementation of the AVID-FP protocol**.  
-It couples Reed–Solomon erasure coding with homomorphic fingerprints and a two-phase Echo/Ready gossip to deliver:
+## 1  Project Overview 
+The **AVID-FP Object Store** turns a decade-old research insight into a runnable micro-service:
 
-* **Durability** — survive up to *f = n – m* Byzantine nodes  
-* **Bandwidth-proportional integrity** — validate after reading only *m* shards  
-* **DevOps delight** — 14 MB distroless images, Prometheus/Grafana out of the box  
+| Stage | What happens | Why it matters |
+|-------|--------------|----------------|
+| ① Client slices an object into *m* data + (*n – m*) parity fragments via SIMD-accelerated Reed–Solomon. | Cuts storage overhead to (n/m) × versus triple replication. |
+| ② It computes a **fingerprinted cross-checksum (FPCC)**: SHA-256 hash **and** 64-bit homomorphic fingerprint of every fragment. | Lets any reader verify integrity after downloading only *m* shards. |
+| ③ Fragments + FPCC are fanned out to *n* identical storage nodes. | No single point of failure; client stays stateless. |
+| ④ Nodes exchange **Echo** then **Ready** gossip; on ≥ 2f + 1 Readies they commit. | Guarantees durability & agreement under ≤ *f = n – m* Byzantine faults. |
+| ⑤ Reader fetches any shard 0 to learn the FPCC, grabs the next *m – 1* good shards, validates on-the-fly, and decodes. | Bandwidth-proportional reads; corruption instantly detected. |
+| ⑥ Prometheus & Grafana export live throughput, latency, GC, and snapshot events. | Operators get SRE-grade observability from day one. |
+
 
 Full write-up: [`AVID_FP_Project_Report.pdf`](AVID_FP_Project_Report.pdf)  
 Slides: [AVID FP – Store.pptx](AVID%20FP%20-%20Store.pptx)
