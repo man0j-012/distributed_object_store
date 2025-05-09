@@ -18,7 +18,7 @@ It couples Reed–Solomon erasure coding with homomorphic fingerprints and a two
 * **DevOps delight** — 14 MB distroless images, Prometheus/Grafana out of the box  
 
 Full write-up: [`AVID_FP_Project_Report.pdf`](AVID_FP_Project_Report.pdf)  
-Slides: [`AVID FP - Store.pptx`](AVID FP - Store.pptx)
+Slides: [AVID FP – Store.pptx](AVID%20FP%20-%20Store.pptx)
 
 ---
 
