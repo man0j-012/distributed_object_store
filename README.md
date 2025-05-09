@@ -107,7 +107,7 @@ verification.sh / verification.ps1 wraps the entire suite; green exit = all guar
 | **Coverage & CI**               | >92 % unit coverage, matrix CI (TLS on/off, 3-of-5 & 4-of-6)        |
 | **Community ready**             | MIT license, SBOM, docs, demo video                                 |
 
-🎬 Watch the live demo: Demo Video (mp4)
+🎬 Watch the live demo:  [`Demo_Video`](Demo_Video.mp4).
 
 ---
 
