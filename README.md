@@ -24,17 +24,6 @@
 ---
 ---
 
-## ✨ Project Highlights & Personal Achievements
-
-| 🏆 Milestone | Description |
-|--------------|-------------|
-| **First ever working AVID-FP system** | Turned the 2021 research paper into real code—in ~2 000 SLOC + 900 tests. |
-| **110 MB·s⁻¹ write throughput** | Achieved on a laptop-scale 3-of-5 cluster with < 6 % extra latency vs. `scp`. |
-| **Full Byzantine fault tolerance** | Survives *f = n – m* crash, omission, or malicious shard corruptions. |
-| **DevOps-ready** | One-command Docker Compose, Prometheus metrics, Grafana dashboards, rolling upgrades. |
-| **Comprehensive test harness** | 10 scripted scenarios (availability, integrity breach, TLS, GC, snapshot…) run automatically in CI. |
-| **Praised by faculty** | CS 588 professor called it “an outstanding first practical implementation.” |
-
 ---
 
 ## 🚀 Quick Start (5-node demo)
