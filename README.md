@@ -23,7 +23,19 @@ Slides: [`AVID FP - Store.pptx`](AVID FP - Store.pptx)
 ---
 
 ## 2  Project Structure
-
+├─ bin/ # static binaries (built)
+├─ cmd/ # server & client entry points
+├─ pkg/ # erasure, fingerprint, protocol, storage
+├─ configs/ # YAML per node
+├─ deploy/ # Prometheus + Grafana
+├─ Images/ # architecture figures (Figure1.png, Figure2.png)
+├─ snapshots_host/ # example snapshot output
+├─ docker-compose.yml
+├─ Dockerfile
+├─ README.md # ← you are here
+├─ Design_Document.pdf
+├─ Test_Verification.pdf
+└─ User_Manual.pdf
 
 ## 🎯 Why AVID‑FP?
 
