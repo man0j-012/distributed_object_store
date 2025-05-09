@@ -1,4 +1,4 @@
-<h1 align="center">AVID-FP Object Store — README</h1>
+<h1 align="center">AVID-FP Object Store </h1>
 <p align="center"><em>Fault-tolerant • Verifiable • Container-ready</em></p>
 <p align="center">
   <img src="https://img.shields.io/badge/Go-1.23-blue?logo=go" alt="Go 1.23">
