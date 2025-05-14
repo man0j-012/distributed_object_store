@@ -26,7 +26,7 @@ Slides: [AVID FP – Store.pptx](AVID%20FP%20-%20Store.pptx)
 
 | | What it means | Why you should care |
 |--|--|--|
-| ⚡ **Research → Reality** | 3,600 lines of Go (95 % unit-test coverage) turn the AVID-FP paper into a living micro-service. | Stop reading PDFs—`docker compose up` and watch the protocol run. |
+| ⚡ **Research → Reality** | 3,600 lines of Go (95 % unit-test coverage) turn the AVID-FP paper into a living micro-service. | Stop reading PDFs—` docker compose up` and watch the protocol run. |
 | 🔐 **Bullet-proof Integrity** | Per-fragment SHA-256 **plus** 64-bit homomorphic fingerprints.<br>Self-Echo + Ready gossip = zero silent data corruption. | Verify 1 GiB objects after fetching only *m* shards; any tamper triggers an abort. |
 | 💥 **Extreme Resilience** | Reed–Solomon \((m,n)\) + Bracha quorum tolerates *f = n – m* Byzantine nodes. | Lose disks, power, or even malicious peers—data still safe. |
 | 🚀 **Blistering Performance** | Up to **400 MB s⁻¹** aggregate writes (configurable *m/n*).<br>\< 5 % latency overhead for integrity checks. | High throughput with cryptographic safety—rare combo. |
