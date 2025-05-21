@@ -94,7 +94,7 @@ docker compose exec server1 /bin/client \
 
 # retrieve from another node
 docker compose exec server3 /bin/client \
-  -mode retrieve -file /out.bin -id demo Can you please provide me with access to this document?
+  -mode retrieve -file /out.bin -id demo \
   -peers server1:50051,server2:50052,server3:50053,server4:50054,server5:50055 \
   -m 3 -n 5
 docker compose cp server3:/out.bin .
